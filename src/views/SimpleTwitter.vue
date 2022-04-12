@@ -48,18 +48,12 @@
     <div class="card_tweets">
       <section class="tweets" v-if="tweets.length > 0">
         <h2>Tweets</h2>
-        <div class="tweetMsg" v-for="(tweet, index) in tweets" :key="index">
-          <p>
-            {{ tweet.text }}
-          </p>
-          <div class="tweetDate">
-            <i class="fas fa-calendar-alt fa-sm fa-fw"></i>{{ tweet.date }}
-          </div>
-          <div class="tweet_remove" @click="removeTweet(index)">
-            <span class="remove">Delete this tweet <i class="fas fa-trash fa-xs fa-fw"></i>
-            </span>
-          </div>
-        </div>
+        <tweet-message
+          v-for="(tweet, index) in tweets"
+          :tweet="tweet"
+          :key="index"
+          @remove-tweet="removeTweet(index)">
+        </tweet-message>
       </section>
       <div v-else>No tweets to show</div>
     </div>
@@ -67,8 +61,10 @@
 </template>
 
 <script>
+import TweetMessage from '../components/TweetMessage'
 export default {
   name: 'SimpleTwitter',
+  components: {TweetMessage},
   data () {
     return {
       userData: {},
